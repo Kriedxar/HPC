@@ -20,7 +20,7 @@ int main(int argc, char *argv[]){
 	double endTime;
 	double tiempo;
 
-	int *street1 = (int *)malloc((n+2)*sizeof(double));
+	int *street1 = (int *)malloc((n+2)*sizeof(int));
 
 	srand(time(NULL));
 
@@ -38,9 +38,9 @@ int main(int argc, char *argv[]){
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	MPI_Get_processor_name(hostname, &len);
 
-	int *scatterStreet = (int *)malloc((n/numranks+2)*sizeof(double));
-	int *gatherStreet = (int *)malloc((n/numranks)*sizeof(double));
-	int *street2 = (int *)malloc((n+2)*sizeof(double));
+	int *scatterStreet = (int *)malloc((n/numranks+2)*sizeof(int));
+	int *gatherStreet = (int *)malloc((n/numranks)*sizeof(int));
+	int *street2 = (int *)malloc((n+2)*sizeof(int));
 
 	startTime = MPI_Wtime();
 
