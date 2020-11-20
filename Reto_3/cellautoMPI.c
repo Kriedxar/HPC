@@ -77,12 +77,12 @@ int main(int argc, char *argv[]){
 
 	if(rank == 0){
 		printf("t:\t");
-		for(int i = 0; i <= n+1; i++){
+		for(int i = 1; i < n+1; i++){
 			printf("%d ", street1[i]);
 		}
 		printf("\n");
 		printf("t+1:\t");
-		for(int i = 0; i <= n+1; i++){
+		for(int i = 1; i < n+1; i++){
 			printf("%d ", street2[i]);
 		}
 		printf("\n");
