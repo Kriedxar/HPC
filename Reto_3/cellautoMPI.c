@@ -13,7 +13,7 @@ int main(int argc, char *argv[]){
 	float speed = 0;
 
 	int numranks, rank, len;
-	char hotname[MPI_MAX_PROCESSOR_NAME];
+	char hostname[MPI_MAX_PROCESSOR_NAME];
 
 	double startTime;
 	double endTime;
