@@ -4,7 +4,7 @@
 #include <mpi.h>
 
 //mpicc cellautoMPI.c -o executable
-//mpirun -np 4 -hosts head,wn1,wn2,wn3 ./executable $8
+//mpirun -np 4 -hosts head,wn1,wn2,wn3 ./executable 8
 
 int main(int argc, char *argv[]){
 	//int n = 16;
