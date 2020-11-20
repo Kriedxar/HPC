@@ -38,7 +38,7 @@ int main(int argc, char *argv[]){
 	MPI_Get_processor_name(hostname, &len);
 
 	int *scatterStreet = (int *)malloc((n/numranks+2)*sizeof(double));
-	int *gatherStreet = (int *)malloc((n+2)*sizeof(double));
+	int *gatherStreet = (int *)malloc((n/numranks)*sizeof(double));
 	int *street2 = (int *)malloc((n+2)*sizeof(double));
 
 	startTime = MPI_Wtime();
@@ -49,20 +49,20 @@ int main(int argc, char *argv[]){
 		for(int i = 1; i < n/numranks+1; i++){
 			if(scatterStreet[i] == 0){
 				if(scatterStreet[i-1] == 1){
-					gatherStreet[i] = 1;
+					gatherStreet[i-1] = 1;
 					nummov = nummov + 1;
 				}
 			}
 			else{
 				if(scatterStreet[i+1] == 0){
-					gatherStreet[i] = 0;
+					gatherStreet[i-1] = 0;
 				}
 				else if(scatterStreet[i+1] == 1){
-					gatherStreet[i] = 1;
+					gatherStreet[i-1] = 1;
 				}
 			}
 		}
-		MPI_Gather(gatherStreet[1], n/numranks, MPI_INT, &street2[(n/numranks)*p+1], n/numranks, MPI_INT, 0, MPI_COMM_WORLD);
+		MPI_Gather(gatherStreet, n/numranks, MPI_INT, &street2[(n/numranks)*p+1], n/numranks, MPI_INT, 0, MPI_COMM_WORLD);
 		MPI_Barrier(MPI_COMM_WORLD);
 	}
 	street2[0] = street2[n];
