@@ -52,6 +52,9 @@ int main(int argc, char *argv[]){
 					gatherStreet[i-1] = 1;
 					nummov = nummov + 1;
 				}
+				else{
+					gatherStreet[i-1] = 0;
+				}
 			}
 			else{
 				if(scatterStreet[i+1] == 0){
