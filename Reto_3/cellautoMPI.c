@@ -20,7 +20,7 @@ int main(int argc, char *argv[]){
 	double endTime;
 	double tiempo;
 
-	int *street1 = (int *)malloc((n+2)*sizeof(int));
+	int *street1 = (int *)malloc((n+2)*sizeof(double));
 
 	srand(time(NULL));
 
@@ -38,9 +38,9 @@ int main(int argc, char *argv[]){
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	MPI_Get_processor_name(hostname, &len);
 
-	int *scatterStreet = (int *)malloc((n/numranks+2)*sizeof(int));
-	int *gatherStreet = (int *)malloc((n/numranks)*sizeof(int));
-	int *street2 = (int *)malloc((n+2)*sizeof(int));
+	int *scatterStreet = (int *)malloc((n/numranks+2)*sizeof(double));
+	int *gatherStreet = (int *)malloc((n/numranks)*sizeof(double));
+	int *street2 = (int *)malloc((n+2)*sizeof(double));
 
 	startTime = MPI_Wtime();
 
@@ -80,7 +80,7 @@ int main(int argc, char *argv[]){
 	speed = 1.0*nummov/numv;
 
 	if(rank == 0){
-		
+		/*
 		printf("t:\t");
 		for(int i = 1; i < n+1; i++){
 			printf("%d ", street1[i]);
@@ -91,7 +91,7 @@ int main(int argc, char *argv[]){
 			printf("%d ", street2[i]);
 		}
 		printf("\n");
-		
+		*/
 		printf("espacios: %d\tprocesos: %d\tvehiculos: %d\tmovimientos: %d\tvelocidad: %.2f\ttiempo: %f\n", n, numranks, numv, nummov, speed, tiempo);
 	}
 
