@@ -8,7 +8,7 @@
 
 int main(int argc, char *argv[]){
 	//int n = 16;
-	int n = atoid(argv[1]);
+	int n = atoi(argv[1]);
 	int numv = 0;
 	int nummov = 0;
 	float speed = 0;
