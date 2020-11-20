@@ -4,10 +4,11 @@
 #include <mpi.h>
 
 //mpicc cellautoMPI.c -o executable
-//mpirun -np 4 -hosts head,wn1,wn2,wn3 ./executable
+//mpirun -np 4 -hosts head,wn1,wn2,wn3 ./executable $8
 
 int main(int argc, char *argv[]){
-	int n = 16;
+	//int n = 16;
+	int n = atoid(argv[1]);
 	int numv = 0;
 	int nummov = 0;
 	float speed = 0;
@@ -93,5 +94,4 @@ int main(int argc, char *argv[]){
 	}
 
 	MPI_Finalize();
-	
 }
