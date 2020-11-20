@@ -75,18 +75,20 @@ int main(int argc, char *argv[]){
 
 	speed = 1.0*nummov/numv;
 
-	MPI_Finalize();
+	if(rank == 0){
+		printf("t:\t");
+		for(int i = 0; i <= n+1; i++){
+			printf("%d ", street1[i]);
+		}
+		printf("\n");
+		printf("t+1:\t");
+		for(int i = 0; i <= n+1; i++){
+			printf("%d ", street2[i]);
+		}
+		printf("\n");
+		printf("espacios: %d\tprocesos: %d\tvehiculos: %d\tmovimientos: %d\tvelocidad: %.2f\ttiempo: %f\n", n, numranks, numv, nummov, speed, tiempo);
+	}
 
-	printf("t:\t");
-	for(int i = 0; i <= n+1; i++){
-		printf("%d ", street1[i]);
-	}
-	printf("\n");
-	printf("t+1:\t");
-	for(int i = 0; i <= n+1; i++){
-		printf("%d ", street2[i]);
-	}
-	printf("\n");
-	printf("espacios: %d\tprocesos: %d\tvehiculos: %d\tmovimientos: %d\tvelocidad: %.2f\ttiempo: %f\n", n, numranks, numv, nummov, speed, tiempo);
+	MPI_Finalize();
 	
 }
