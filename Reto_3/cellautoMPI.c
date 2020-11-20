@@ -87,6 +87,6 @@ int main(int argc, char *argv[]){
 		printf("%d ", street2[i]);
 	}
 	printf("\n");
-	printf("espacios: %d\tprocesos: %d\tvehiculos: %d\tmovimientos: %d\tvelocidad: %.2f\ttiempo: %f\n", n, p, numv, nummov, speed, tiempo);
+	printf("espacios: %d\tprocesos: %d\tvehiculos: %d\tmovimientos: %d\tvelocidad: %.2f\ttiempo: %f\n", n, numranks, numv, nummov, speed, tiempo);
 	
 }
