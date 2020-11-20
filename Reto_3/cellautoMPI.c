@@ -6,7 +6,7 @@
 //mpicc cellautoMPI.c -o executable
 //mpirun -np 4 -hosts head,wn1,wn2,wn3 ./executable
 
-int main(int arg, char *argv[]){
+int main(int argc, char *argv[]){
 	int n = 16;
 	int numv = 0;
 	int nummov = 0;
