@@ -62,7 +62,7 @@ int main(int argc, char *argv[]){
 				}
 			}
 		}
-		MPI_Gather(gatherMat[1], n/numranks, MPI_INT, &street2[(n/numranks)*p+1], n/numranks, MPI_INT, 0, MPI_COMM_WORLD);
+		MPI_Gather(gatherStreet[1], n/numranks, MPI_INT, &street2[(n/numranks)*p+1], n/numranks, MPI_INT, 0, MPI_COMM_WORLD);
 		MPI_Barrier(MPI_COMM_WORLD);
 	}
 	street2[0] = street2[n];
