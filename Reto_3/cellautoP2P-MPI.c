@@ -27,7 +27,6 @@ int main(int argc, char *argv[]){
 
 	for(int i = 1; i <= n; i++){
 		street1[i] = rand() % 2;
-		}
 	}
 	street1[0] = street1[n];
 	street1[n+1] = street1[1];
