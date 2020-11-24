@@ -42,7 +42,7 @@ int main(int argc, char *argv[]){
 	startTime = MPI_Wtime();
 
 	for(int p = 0; p < numranks; p++){
-		print("pato");
+		printf("pato");
 		MPI_Scatter(&street1[p*n/numranks], (n/numranks)+2, MPI_INT,scatterStreet, (n/numranks)+2, MPI_INT, 0, MPI_COMM_WORLD);
 		MPI_Barrier(MPI_COMM_WORLD);
 		for(int r = 0; r < t; r++){
