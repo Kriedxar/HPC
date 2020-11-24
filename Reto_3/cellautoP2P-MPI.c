@@ -46,7 +46,6 @@ int main(int argc, char *argv[]){
 		MPI_Barrier(MPI_COMM_WORLD);
 	}
 		for(int r = 0; r < t; r++){
-			printf("%d", p);
 			for(int i = 1; i < n/numranks+1; i++){
 				if(scatterStreet[i] == 0){
 					if(scatterStreet[i-1] == 1){
