@@ -4,7 +4,8 @@
 #include <mpi.h>
 
 //mpicc cellautoMPI.c -o executable
-//mpirun -np 4 -hosts head,wn1,wn2,wn3 ./executable 8
+//mpirun -np 8 -hosts wn1,wn2,wn3,wn4,wn5,wn6,wn7,wn8 ./executable 16
+//mpirun -np 8 -machinefile mfile ./executable 16
 
 int main(int argc, char *argv[]){
 	//int n = 16;
@@ -80,7 +81,7 @@ int main(int argc, char *argv[]){
 	speed = 1.0*nummov/numv;
 
 	if(rank == 0){
-		/*
+		
 		printf("t:\t");
 		for(int i = 1; i < n+1; i++){
 			printf("%d ", street1[i]);
@@ -91,7 +92,7 @@ int main(int argc, char *argv[]){
 			printf("%d ", street2[i]);
 		}
 		printf("\n");
-		*/
+		
 		printf("espacios: %d\tprocesos: %d\tvehiculos: %d\tmovimientos: %d\tvelocidad: %.2f\ttiempo: %f\n", n, numranks, numv, nummov, speed, tiempo);
 	}
 
