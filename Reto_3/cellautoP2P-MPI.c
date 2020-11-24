@@ -71,10 +71,10 @@ int main(int argc, char *argv[]){
 			if(next == numranks){
 				next = 0;
 			}
-			MPI_Send(gatherStreet[1], 1, MPI_INT, prev, tag, MPI_COMM_WORLD);
-			MPI_Send(gatherStreet[n/numranks], 1, MPI_INT, next, tag, MPI_COMM_WORLD);
-			MPI_Recv(gatherStreet[0], 1, MPI_INT, prev, tag, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-			MPI_Recv(gatherStreet[n/numranks+1], 1, MPI_INT, next, tag, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+			MPI_Send(&gatherStreet[1], 1, MPI_INT, prev, tag, MPI_COMM_WORLD);
+			MPI_Send(&gatherStreet[n/numranks], 1, MPI_INT, next, tag, MPI_COMM_WORLD);
+			MPI_Recv(&gatherStreet[0], 1, MPI_INT, prev, tag, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+			MPI_Recv(&gatherStreet[n/numranks+1], 1, MPI_INT, next, tag, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 			tag = tag + 1;
 			scatterStreet = gatherStreet;
 		}
