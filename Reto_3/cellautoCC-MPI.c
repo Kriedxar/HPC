@@ -5,7 +5,7 @@
 
 //mpicc cellautoCC-MPI.c -o execCC
 //mpirun -np 8 -hosts wn1,wn2,wn3,wn4,wn5,wn6,wn7,wn8 ./execCC 16 1
-//mpirun -np 8 -machinefile mfile ./executable 16
+//mpirun -np 8 -machinefile mfile ./execCC 16 1
 
 int main(int argc, char *argv[]){
 	//int n = 16;

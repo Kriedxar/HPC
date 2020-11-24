@@ -5,7 +5,7 @@
 
 //mpicc cellautoP2P-MPI.c -o execP2P
 //mpirun -np 8 -hosts wn1,wn2,wn3,wn4,wn5,wn6,wn7,wn8 ./execP2P 16 1
-//mpirun -np 8 -machinefile mfile ./executable 16
+//mpirun -np 8 -machinefile mfile ./execP2P 16 1
 
 int main(int argc, char *argv[]){
 	//int n = 16;
@@ -42,6 +42,7 @@ int main(int argc, char *argv[]){
 	startTime = MPI_Wtime();
 
 	for(int p = 0; p < numranks; p++){
+		print("pato");
 		MPI_Scatter(&street1[p*n/numranks], (n/numranks)+2, MPI_INT,scatterStreet, (n/numranks)+2, MPI_INT, 0, MPI_COMM_WORLD);
 		MPI_Barrier(MPI_COMM_WORLD);
 		for(int r = 0; r < t; r++){
