@@ -6,6 +6,7 @@
 //mpicc cellautoMPI.c -o executable
 //mpirun -np 8 -hosts wn1,wn2,wn3,wn4,wn5,wn6,wn7,wn8 ./executable 16
 //mpirun -np 8 -machinefile mfile ./executable 16
+//zapato
 
 int main(int argc, char *argv[]){
 	//int n = 16;
