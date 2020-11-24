@@ -44,6 +44,7 @@ int main(int argc, char *argv[]){
 	for(int p = 0; p < numranks; p++){
 		MPI_Scatter(&street1[p*n/numranks], (n/numranks)+2, MPI_INT,scatterStreet, (n/numranks)+2, MPI_INT, 0, MPI_COMM_WORLD);
 		MPI_Barrier(MPI_COMM_WORLD);
+	}
 		for(int r = 0; r < t; r++){
 			printf("%d", p);
 			for(int i = 1; i < n/numranks+1; i++){
@@ -79,6 +80,7 @@ int main(int argc, char *argv[]){
 			tag = tag + 1;
 			scatterStreet = gatherStreet;
 		}
+	for(int p = 0; p < numranks; p++){
 		MPI_Gather(gatherStreet, n/numranks, MPI_INT, &street2[(n/numranks)*p], n/numranks, MPI_INT, 0, MPI_COMM_WORLD);
 		MPI_Barrier(MPI_COMM_WORLD);
 		street2[n+1] = street2[1];
