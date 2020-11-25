@@ -52,14 +52,13 @@ int main(int argc, char *argv[]){
 	MPI_Scatter(&street1[rank*n/numranks], (n/numranks)+2, MPI_INT, scatterStreet, (n/numranks)+2, MPI_INT, 0, MPI_COMM_WORLD);
 	MPI_Barrier(MPI_COMM_WORLD);
 
-	for(int y = 0; y < numranks; y++){
-		if(rank == y){
-			for(int x = 0; x < n/numranks+2; x++){
-				if(x == 0){
-					printf("\nrank: %d - ", rank);
-				}
-				printf("%d ", scatterStreet[x]);
+	
+	if(rank == y){
+		for(int x = 0; x < n/numranks+2; x++){
+			if(x == 0){
+				printf("\nrank: %d - ", rank);
 			}
+			printf("%d ", scatterStreet[x]);
 		}
 	}
 	MPI_Barrier(MPI_COMM_WORLD);
@@ -99,17 +98,13 @@ int main(int argc, char *argv[]){
 		MPI_Recv(&gatherStreet[0], 1, MPI_INT, prev, tag2*prev, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 		MPI_Barrier(MPI_COMM_WORLD);
 
-		for(int y = 0; y < numranks; y++){
-			if(y == 0){
-				printf("\n");
-			}
-			if(rank == y){
-				for(int x = 0; x < n/numranks+2; x++){
-					if(x == 0){
-						printf("\nrank: %d - ", rank);
-					}
-					printf("%d ", gatherStreet[x]);
+		
+		if(rank == 0){
+			for(int x = 0; x < n/numranks+2; x++){
+				if(x == 0){
+					printf("\nrank: %d - ", rank);
 				}
+				printf("%d ", gatherStreet[x]);
 			}
 		}
 		
