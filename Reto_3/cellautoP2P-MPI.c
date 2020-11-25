@@ -12,7 +12,8 @@ int main(int argc, char *argv[]){
 	int t = atoi(argv[2]);
 
 	int numranks, rank, len;
-	int tag = 0;
+	int tag1 = 0;
+	int tag2 = 500;
 	char hostname[MPI_MAX_PROCESSOR_NAME];
 
 	double startTime;
@@ -34,18 +35,23 @@ int main(int argc, char *argv[]){
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	MPI_Get_processor_name(hostname, &len);
 
+	if(rank==0){
+		printf("t:\t");
+		for(int i = 1; i < n+1; i++){
+			printf("%d ", street1[i]);
+		}
+	}
+
 	int *scatterStreet = (int *)malloc((n/numranks+2)*sizeof(double));
 	int *gatherStreet = (int *)malloc((n/numranks+2)*sizeof(double));
 	int *street2 = (int *)malloc((n+2)*sizeof(double));
 
 	startTime = MPI_Wtime();
 
-	//for(int p = 0; p < numranks; p++){
-		MPI_Scatter(&street1[rank*n/numranks], (n/numranks)+2, MPI_INT,scatterStreet, (n/numranks)+2, MPI_INT, 0, MPI_COMM_WORLD);
-		MPI_Barrier(MPI_COMM_WORLD);
-	//}
+	MPI_Scatter(&street1[rank*n/numranks], (n/numranks)+2, MPI_INT,scatterStreet, (n/numranks)+2, MPI_INT, 0, MPI_COMM_WORLD);
+	MPI_Barrier(MPI_COMM_WORLD);
+
 	for(int r = 0; r < t; r++){
-		//for(int p = 0; p < numranks; p++){
 		for(int i = 1; i < n/numranks+1; i++){
 			if(scatterStreet[i] == 0){
 				if(scatterStreet[i-1] == 1){
@@ -72,22 +78,25 @@ int main(int argc, char *argv[]){
 		if(next == numranks){
 			next = 0;
 		}
-		MPI_Send(&gatherStreet[1], 1, MPI_INT, prev, tag+5, MPI_COMM_WORLD);
-		MPI_Send(&gatherStreet[n/numranks], 1, MPI_INT, next, tag, MPI_COMM_WORLD);
+		MPI_Send(&gatherStreet[1], 1, MPI_INT, prev, tag1, MPI_COMM_WORLD);
+		MPI_Recv(&gatherStreet[n/numranks+1], 1, MPI_INT, next, tag1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+
+		MPI_Send(&gatherStreet[n/numranks], 1, MPI_INT, next, tag2, MPI_COMM_WORLD);
+		MPI_Recv(&gatherStreet[0], 1, MPI_INT, prev, tag2, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 		
-		MPI_Recv(&gatherStreet[0], 1, MPI_INT, prev, tag, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-		MPI_Recv(&gatherStreet[n/numranks+1], 1, MPI_INT, next, tag+5, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 		MPI_Barrier(MPI_COMM_WORLD);
 
-		tag = tag + 1;
 		scatterStreet = gatherStreet;
-		//}
+		if (rank == 0){
+			tag1 = tag1 + 1;
+			tag2 = tag2 + 1;
+		}
 	}
 	
-	//for(int p = 0; p < numranks; p++){
-		MPI_Gather(gatherStreet, n/numranks+1, MPI_INT, &street2[(n/numranks)*rank], n/numranks+1, MPI_INT, 0, MPI_COMM_WORLD);
-		MPI_Barrier(MPI_COMM_WORLD);
-	//}
+
+	MPI_Gather(gatherStreet, n/numranks+1, MPI_INT, &street2[(n/numranks)*rank], n/numranks+1, MPI_INT, 0, MPI_COMM_WORLD);
+	MPI_Barrier(MPI_COMM_WORLD);
+
 	street2[n+1] = street2[1];
 
 	endTime = MPI_Wtime();
@@ -96,10 +105,6 @@ int main(int argc, char *argv[]){
 	}
 
 	if(rank == 0){
-		printf("t:\t");
-		for(int i = 1; i < n+1; i++){
-			printf("%d ", street1[i]);
-		}
 		printf("\n");
 		printf("t+1:\t");
 		for(int i = 1; i < n+1; i++){
