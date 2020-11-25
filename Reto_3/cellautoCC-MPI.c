@@ -86,7 +86,7 @@ int main(int argc, char *argv[]){
 	speed = 1.0*nummov/numv;
 
 	if(rank == 0){
-		/*
+		
 		printf("t:\t");
 		for(int i = 1; i < n+1; i++){
 			printf("%d ", street1[i]);
@@ -98,8 +98,8 @@ int main(int argc, char *argv[]){
 		}
 		printf("\n");
 		
-		printf("espacios: %d\tprocesos: %d\tvehiculos: %d\tmovimientos: %d\tvelocidad: %.2f\ttiempo: %f\n", n, numranks, numv, nummov, speed, tiempo);
-		*/
+		//printf("espacios: %d\tprocesos: %d\tvehiculos: %d\tmovimientos: %d\tvelocidad: %.2f\ttiempo: %f\n", n, numranks, numv, nummov, speed, tiempo);
+		
 		printf("procesos: %d\ttiempo: %f\n", numranks, tiempo);
 	}
 
