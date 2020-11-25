@@ -12,8 +12,8 @@ int main(int argc, char *argv[]){
 	int t = atoi(argv[2]);
 
 	int numranks, rank, len;
-	int tag1 = 0;
-	int tag2 = 500;
+	int tag1 = 1;
+	int tag2 = 11;
 	char hostname[MPI_MAX_PROCESSOR_NAME];
 
 	double startTime;
