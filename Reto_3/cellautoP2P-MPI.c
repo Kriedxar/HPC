@@ -69,7 +69,7 @@ int main(int argc, char *argv[]){
 
 	MPI_Barrier(MPI_COMM_WORLD);
 
-	
+	/*
 	if(rank == 0){
 		for(int x = 0; x < n/numranks+2; x++){
 			if(x == 0){
@@ -78,7 +78,7 @@ int main(int argc, char *argv[]){
 			printf("%d ", scatterStreet[x]);
 		}
 	}
-	MPI_Barrier(MPI_COMM_WORLD);
+	*/
 
 	for(int r = 0; r < t; r++){
 		for(int i = 1; i < n/numranks+1; i++){
@@ -116,7 +116,7 @@ int main(int argc, char *argv[]){
 
 		MPI_Barrier(MPI_COMM_WORLD);
 
-		
+		/*
 		if(rank == 0){
 			for(int x = 0; x < n/numranks+2; x++){
 				if(x == 0){
@@ -125,8 +125,7 @@ int main(int argc, char *argv[]){
 				printf("%d ", gatherStreet[x]);
 			}
 		}
-		
-		MPI_Barrier(MPI_COMM_WORLD);
+		*/
 
 		scatterStreet = gatherStreet;
 		tag1 = tag1 + 1;
