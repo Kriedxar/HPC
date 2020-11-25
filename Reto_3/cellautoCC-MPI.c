@@ -34,17 +34,17 @@ int main(int argc, char *argv[]){
 	street1[0] = street1[n];
 	street1[n+1] = street1[1];
 
-	if (rank == 0){
+	MPI_Init(&argc, &argv);
+	MPI_Comm_size(MPI_COMM_WORLD, &numranks);
+	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+	MPI_Get_processor_name(hostname, &len);
+
+	if(rank == 0){
 		printf("t:\t");
 		for(int i = 1; i < n+1; i++){
 			printf("%d ", street1[i]);
 		}
 	}
-
-	MPI_Init(&argc, &argv);
-	MPI_Comm_size(MPI_COMM_WORLD, &numranks);
-	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-	MPI_Get_processor_name(hostname, &len);
 
 	int *scatterStreet = (int *)malloc((n/numranks+2)*sizeof(double));
 	int *gatherStreet = (int *)malloc((n/numranks)*sizeof(double));
