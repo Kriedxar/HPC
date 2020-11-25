@@ -53,6 +53,15 @@ int main(int argc, char *argv[]){
 	MPI_Barrier(MPI_COMM_WORLD);
 
 	for(int r = 0; r < t; r++){
+		if(rank == 0){
+			
+			for(int x = 0; x < n/numranks+2; x++){
+				if(x == 0){
+					printf("\nrank: %d - ", rank);
+				}
+				printf("%d ", scatterStreet[x]);
+			}
+		}
 		for(int i = 1; i < n/numranks+1; i++){
 			if(scatterStreet[i] == 0){
 				if(scatterStreet[i-1] == 1){
