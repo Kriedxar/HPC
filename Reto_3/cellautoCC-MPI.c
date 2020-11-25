@@ -89,7 +89,6 @@ int main(int argc, char *argv[]){
 	if(rank == 0){
 		
 		printf("\n");
-		printf("t+%d:\t", t);
 		for(int i = 1; i < n+1; i++){
 			printf("%d ", street2[i]);
 		}
