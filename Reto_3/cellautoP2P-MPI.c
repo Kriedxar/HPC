@@ -106,7 +106,7 @@ int main(int argc, char *argv[]){
 		MPI_Barrier(MPI_COMM_WORLD);
 
 		for(int i = 0; i < n/numranks+2; i++){
-			scatterStreet[i] = gatherStreet;
+			scatterStreet[i] = gatherStreet[i];
 		}
 		if(rank == 0){
 			tag1 = tag1 + 1;
