@@ -78,11 +78,11 @@ int main(int argc, char *argv[]){
 		if(next == numranks){
 			next = 0;
 		}
-		MPI_Send(&gatherStreet[1], 1, MPI_INT, prev, tag1, MPI_COMM_WORLD);
-		MPI_Recv(&gatherStreet[n/numranks+1], 1, MPI_INT, next, tag1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+		MPI_Send(&gatherStreet[1], 1, MPI_INT, prev, tag1*rank, MPI_COMM_WORLD);
+		MPI_Recv(&gatherStreet[n/numranks+1], 1, MPI_INT, next, tag1*next, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
-		MPI_Send(&gatherStreet[n/numranks], 1, MPI_INT, next, tag2, MPI_COMM_WORLD);
-		MPI_Recv(&gatherStreet[0], 1, MPI_INT, prev, tag2, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+		MPI_Send(&gatherStreet[n/numranks], 1, MPI_INT, next, tag2*rank, MPI_COMM_WORLD);
+		MPI_Recv(&gatherStreet[0], 1, MPI_INT, prev, tag2*prev, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 		
 		MPI_Barrier(MPI_COMM_WORLD);
 
