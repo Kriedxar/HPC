@@ -104,7 +104,7 @@ int main(int argc, char *argv[]){
 		printf("espacios: %d\tprocesos: %d\tvehiculos: %d\tmovimientos: %d\tvelocidad: %.2f\ttiempo: %f\n", n, numranks, numv, nummov, speed, tiempo);
 		
 		//printf("procesos: %d\ttiempo: %f\n", numranks, tiempo);
-		writeTime(tiempo, n, numranks)
+		writeTime(tiempo, n, numranks);
 	}
 
 	MPI_Finalize();
