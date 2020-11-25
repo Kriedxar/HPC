@@ -66,7 +66,7 @@ int main(int argc, char *argv[]){
 			}
 		}
 		for(int i = 1; i < n/numranks+1; i++){
-			printf("%d, %d", rank, gatherStreet[i]);
+			printf("%d, %d\n", rank, gatherStreet[i]);
 		}
 		int prev = rank - 1;
 		int next = rank + 1;
