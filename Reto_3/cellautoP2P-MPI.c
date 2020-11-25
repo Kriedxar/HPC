@@ -49,7 +49,7 @@ int main(int argc, char *argv[]){
 
 	startTime = MPI_Wtime();
 
-	MPI_Scatter(&street1[rank*n/numranks], (n/numranks), MPI_INT, &scatterStreet[1], (n/numranks), MPI_INT, 0, MPI_COMM_WORLD);
+	MPI_Scatter(&street1[rank*n/numranks+1], (n/numranks), MPI_INT, &scatterStreet[1], (n/numranks), MPI_INT, 0, MPI_COMM_WORLD);
 	MPI_Barrier(MPI_COMM_WORLD);
 
 	int prev = rank - 1;
