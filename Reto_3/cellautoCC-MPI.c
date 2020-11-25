@@ -81,6 +81,7 @@ int main(int argc, char *argv[]){
 		street2[0] = street2[n];
 		street2[n+1] = street2[1];
 		street1 = street2;
+		MPI_Barrier(MPI_COMM_WORLD);
 	}
 	endTime = MPI_Wtime();
 	if(rank == 0){
