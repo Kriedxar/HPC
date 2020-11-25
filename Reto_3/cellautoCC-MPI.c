@@ -8,7 +8,6 @@
 //mpirun -np 8 -machinefile mfile ./execCC 16 1
 
 int main(int argc, char *argv[]){
-	//int n = 16;
 	int n = atoi(argv[1]);
 	int t = atoi(argv[2]);
 	int numv = 0;
