@@ -49,10 +49,28 @@ int main(int argc, char *argv[]){
 
 	startTime = MPI_Wtime();
 
-	MPI_Scatter(&street1[rank*n/numranks], (n/numranks)+2, MPI_INT, &scatterStreet[0], (n/numranks)+2, MPI_INT, 0, MPI_COMM_WORLD);
+	MPI_Scatter(&street1[rank*n/numranks], (n/numranks), MPI_INT, &scatterStreet[1], (n/numranks), MPI_INT, 0, MPI_COMM_WORLD);
 	MPI_Barrier(MPI_COMM_WORLD);
+
+	int prev = rank - 1;
+	int next = rank + 1;
+	if(prev < 0){
+		prev = numranks - 1;
+	}
+	if(next == numranks){
+		next = 0;
+	}
+
+	MPI_Send(&gatherStreet[1], 1, MPI_INT, prev, tag1*rank, MPI_COMM_WORLD);
+	MPI_Recv(&gatherStreet[n/numranks+1], 1, MPI_INT, next, tag1*next, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+	MPI_Barrier(MPI_COMM_WORLD);
+
+	MPI_Send(&gatherStreet[n/numranks], 1, MPI_INT, next, tag2*rank, MPI_COMM_WORLD);
+	MPI_Recv(&gatherStreet[0], 1, MPI_INT, prev, tag2*prev, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+	MPI_Barrier(MPI_COMM_WORLD);
+
 	
-	if(rank == 3){
+	if(rank == 0){
 		for(int x = 0; x < n/numranks+2; x++){
 			if(x == 0){
 				printf("\nrank: %d - ", rank);
@@ -81,8 +99,8 @@ int main(int argc, char *argv[]){
 				}
 			}
 		}
-		int prev = rank - 1;
-		int next = rank + 1;
+		prev = rank - 1;
+		next = rank + 1;
 		if(prev < 0){
 			prev = numranks - 1;
 		}
@@ -90,17 +108,16 @@ int main(int argc, char *argv[]){
 			next = 0;
 		}
 		//printf("rank: %d\ttag1: %d\ttag1s: %d\ttag1r: %d\ttag2: %d\ttag2s: %d\ttag2r: %d\n", rank, tag1, tag1*rank, tag1*next, tag2, tag2*rank, tag2*prev);
-		MPI_Barrier(MPI_COMM_WORLD);
 		MPI_Send(&gatherStreet[1], 1, MPI_INT, prev, tag1*rank, MPI_COMM_WORLD);
 		MPI_Recv(&gatherStreet[n/numranks+1], 1, MPI_INT, next, tag1*next, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-		MPI_Barrier(MPI_COMM_WORLD);
 
 		MPI_Send(&gatherStreet[n/numranks], 1, MPI_INT, next, tag2*rank, MPI_COMM_WORLD);
 		MPI_Recv(&gatherStreet[0], 1, MPI_INT, prev, tag2*prev, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+		
 		MPI_Barrier(MPI_COMM_WORLD);
 
 		
-		if(rank == 3){
+		if(rank == 0){
 			for(int x = 0; x < n/numranks+2; x++){
 				if(x == 0){
 					printf("\nrank: %d - ", rank);
