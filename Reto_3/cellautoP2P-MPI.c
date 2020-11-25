@@ -21,7 +21,6 @@ int main(int argc, char *argv[]){
 	double tiempo;
 
 	int *street1 = (int *)malloc((n+2)*sizeof(double));
-	int *street2 = (int *)malloc((n+2)*sizeof(double));
 
 	srand(time(NULL));
 
@@ -38,15 +37,13 @@ int main(int argc, char *argv[]){
 
 	int *scatterStreet = (int *)malloc((n/numranks+2)*sizeof(double));
 	int *gatherStreet = (int *)malloc((n/numranks+2)*sizeof(double));
+	int *street2 = (int *)malloc((n+2)*sizeof(double));
 
 	startTime = MPI_Wtime();
 
 	for(int p = 0; p < numranks; p++){
 		MPI_Scatter(&street1[p*n/numranks], (n/numranks)+2, MPI_INT,scatterStreet, (n/numranks)+2, MPI_INT, 0, MPI_COMM_WORLD);
 		MPI_Barrier(MPI_COMM_WORLD);
-	}
-	for(int i = 1; i < n/numranks+1; i++){
-		printf("%d, %d\n", rank, scatterStreet[i]);
 	}
 	for(int r = 0; r < t; r++){
 		//for(int p = 0; p < numranks; p++){

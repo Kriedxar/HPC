@@ -50,9 +50,6 @@ int main(int argc, char *argv[]){
 			MPI_Scatter(&street1[p*n/numranks], (n/numranks)+2, MPI_INT,scatterStreet, (n/numranks)+2, MPI_INT, 0, MPI_COMM_WORLD);
 			MPI_Barrier(MPI_COMM_WORLD);
 			for(int i = 1; i < n/numranks+1; i++){
-				printf("%d, %d\n", rank, scatterStreet[i]);
-			}
-			for(int i = 1; i < n/numranks+1; i++){
 				if(scatterStreet[i] == 0){
 					if(scatterStreet[i-1] == 1){
 						gatherStreet[i-1] = 1;
