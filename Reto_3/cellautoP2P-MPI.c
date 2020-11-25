@@ -86,7 +86,7 @@ int main(int argc, char *argv[]){
 		MPI_Send(&gatherStreet[n/numranks], 1, MPI_INT, next, tag2*rank, MPI_COMM_WORLD);
 		MPI_Recv(&gatherStreet[0], 1, MPI_INT, prev, tag2*prev, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
-		for(x = 0; x < n/numranks+2; x++){
+		for(int x = 0; x < n/numranks+2; x++){
 			if(x == 0){
 				printf("\nrank: %d", rank);
 			}
