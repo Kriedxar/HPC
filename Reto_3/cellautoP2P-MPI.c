@@ -46,8 +46,8 @@ int main(int argc, char *argv[]){
 		MPI_Barrier(MPI_COMM_WORLD);
 	}
 	for(int r = 0; r < t; r++){
-		for(int p = 0; p < numranks; p++){
-			printf("%d\n", p);
+		//for(int p = 0; p < numranks; p++){
+			//printf("%d\n", p);
 			for(int i = 1; i < n/numranks+1; i++){
 				if(scatterStreet[i] == 0){
 					if(scatterStreet[i-1] == 1){
@@ -80,8 +80,9 @@ int main(int argc, char *argv[]){
 			MPI_Recv(&gatherStreet[n/numranks+1], 1, MPI_INT, next, tag, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 			tag = tag + 1;
 			scatterStreet = gatherStreet;
-		}
+		//}
 	}
+	MPI_Barrier(MPI_COMM_WORLD);
 	for(int p = 0; p < numranks; p++){
 		MPI_Gather(gatherStreet, n/numranks, MPI_INT, &street2[(n/numranks)*p], n/numranks, MPI_INT, 0, MPI_COMM_WORLD);
 		MPI_Barrier(MPI_COMM_WORLD);
