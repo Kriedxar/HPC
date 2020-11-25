@@ -40,6 +40,7 @@ int main(int argc, char *argv[]){
 		for(int i = 1; i < n+1; i++){
 			printf("%d ", street1[i]);
 		}
+		printf("\n");
 	}
 
 	int *scatterStreet = (int *)malloc((n/numranks+2)*sizeof(double));
@@ -78,7 +79,7 @@ int main(int argc, char *argv[]){
 		if(next == numranks){
 			next = 0;
 		}
-		printf("rank: %d\ttag1: %d\ttag2: %d\n", rank, tag1, tag2);
+		printf("rank: %d\ttag1: %d\ttag1s: %d\ttag1r: %d\ttag2: %d\ttag2: %d\ttag2s: %d\ttag2r: %d\n", rank, tag1, tag1*rank, tag1*next, tag2, tag2*rank, tag2*prev);
 		MPI_Send(&gatherStreet[1], 1, MPI_INT, prev, tag1*rank, MPI_COMM_WORLD);
 		MPI_Recv(&gatherStreet[n/numranks+1], 1, MPI_INT, next, tag1*next, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
@@ -105,13 +106,11 @@ int main(int argc, char *argv[]){
 	}
 
 	if(rank == 0){
-		printf("\n");
-		printf("t+1:\t");
+		printf("\nt+1:\t");
 		for(int i = 1; i < n+1; i++){
 			printf("%d ", street2[i]);
 		}
-		printf("\n");
-		printf("procesos: %d\ttiempo: %f\n", numranks, tiempo);
+		printf("\nprocesos: %d\ttiempo: %f\n", numranks, tiempo);
 	}
 
 	MPI_Finalize();
