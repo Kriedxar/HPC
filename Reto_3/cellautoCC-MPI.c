@@ -77,9 +77,10 @@ int main(int argc, char *argv[]){
 			MPI_Gather(gatherStreet, n/numranks, MPI_INT, &street2[(n/numranks)*p+1], n/numranks, MPI_INT, 0, MPI_COMM_WORLD);
 			MPI_Barrier(MPI_COMM_WORLD);
 		}
+		MPI_Barrier(MPI_COMM_WORLD);
 		street2[0] = street2[n];
 		street2[n+1] = street2[1];
-		//street1 = street2;
+		street1 = street2;
 	}
 	endTime = MPI_Wtime();
 	if(rank == 0){
