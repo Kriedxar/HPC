@@ -90,8 +90,8 @@ int main(int argc, char *argv[]){
 		if(next == numranks){
 			next = 0;
 		}
-		MPI_Barrier(MPI_COMM_WORLD);
 		//printf("rank: %d\ttag1: %d\ttag1s: %d\ttag1r: %d\ttag2: %d\ttag2s: %d\ttag2r: %d\n", rank, tag1, tag1*rank, tag1*next, tag2, tag2*rank, tag2*prev);
+		MPI_Barrier(MPI_COMM_WORLD);
 		MPI_Send(&gatherStreet[1], 1, MPI_INT, prev, tag1*rank, MPI_COMM_WORLD);
 		MPI_Recv(&gatherStreet[n/numranks+1], 1, MPI_INT, next, tag1*next, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
@@ -117,11 +117,11 @@ int main(int argc, char *argv[]){
 		MPI_Barrier(MPI_COMM_WORLD);
 	}
 	
-
-	MPI_Gather(gatherStreet, n/numranks+1, MPI_INT, &street2[(n/numranks)*rank], n/numranks+1, MPI_INT, 0, MPI_COMM_WORLD);
+	MPI_Gather(&gatherStreet[1], n/numranks, MPI_INT, &street2[(n/numranks)*rank+1], n/numranks, MPI_INT, 0, MPI_COMM_WORLD);
 	MPI_Barrier(MPI_COMM_WORLD);
 
 	street2[n+1] = street2[1];
+	street2[0] = street2[n];
 
 	endTime = MPI_Wtime();
 	if(rank == 0){
