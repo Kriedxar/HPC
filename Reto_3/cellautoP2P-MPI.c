@@ -91,6 +91,7 @@ int main(int argc, char *argv[]){
 			tag1 = tag1 + 1;
 			tag2 = tag2 + 1;
 		}
+		MPI_Barrier(MPI_COMM_WORLD);
 	}
 	
 
