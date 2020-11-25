@@ -69,11 +69,11 @@ int main(int argc, char *argv[]){
 				if(scatterStreet[i-1] == 1){
 					gatherStreet[i] = 1;
 				}
-				else{
+				else if(scatterStreet[i-1] == 0){
 					gatherStreet[i] = 0;
 				}
 			}
-			else{
+			else if(scatterStreet[i] == 1){
 				if(scatterStreet[i+1] == 0){
 					gatherStreet[i] = 0;
 				}
