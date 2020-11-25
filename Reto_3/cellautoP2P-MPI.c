@@ -86,8 +86,8 @@ int main(int argc, char *argv[]){
 	for(int p = 0; p < numranks; p++){
 		MPI_Gather(gatherStreet, n/numranks, MPI_INT, &street2[(n/numranks)*p], n/numranks, MPI_INT, 0, MPI_COMM_WORLD);
 		MPI_Barrier(MPI_COMM_WORLD);
-		street2[n+1] = street2[1];
 	}
+	street2[n+1] = street2[1];
 
 	endTime = MPI_Wtime();
 	if(rank == 0){
