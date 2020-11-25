@@ -85,7 +85,7 @@ int main(int argc, char *argv[]){
 	}
 	
 	//for(int p = 0; p < numranks; p++){
-		MPI_Gather(gatherStreet, n/numranks, MPI_INT, &street2[(n/numranks)*rank], n/numranks, MPI_INT, 0, MPI_COMM_WORLD);
+		MPI_Gather(gatherStreet, n/numranks+1, MPI_INT, &street2[(n/numranks)*rank], n/numranks+1, MPI_INT, 0, MPI_COMM_WORLD);
 		MPI_Barrier(MPI_COMM_WORLD);
 	//}
 	street2[n+1] = street2[1];
