@@ -72,7 +72,6 @@ int main(int argc, char *argv[]){
 		if(next == numranks){
 			next = 0;
 		}
-		printf("%d, %d, %d\n", rank, prev, next);
 		MPI_Send(&gatherStreet[1], 1, MPI_INT, prev, tag+5, MPI_COMM_WORLD);
 		MPI_Send(&gatherStreet[n/numranks], 1, MPI_INT, next, tag, MPI_COMM_WORLD);
 		
