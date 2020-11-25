@@ -5,7 +5,13 @@
 
 //mpicc cellautoCC-MPI.c -o execCC
 //mpirun -np 8 -hosts wn1,wn2,wn3,wn4,wn5,wn6,wn7,wn8 ./execCC 16
-//mpirun -np 8 -machinefile mfile ./execCC 16 1
+//mpirun -np 8 -machinefile mfile ./execCC 16
+
+void writeTime(double elapsed, int len, int npro){
+	FILE *f = fopen("timesCCMPI.txt","a+");
+	fprintf(f,"%i;%i;%.3lf\n", npro, len, elapsed);
+	fclose(f);
+}
 
 int main(int argc, char *argv[]){
 	int n = atoi(argv[1]);
@@ -98,6 +104,7 @@ int main(int argc, char *argv[]){
 		printf("espacios: %d\tprocesos: %d\tvehiculos: %d\tmovimientos: %d\tvelocidad: %.2f\ttiempo: %f\n", n, numranks, numv, nummov, speed, tiempo);
 		
 		//printf("procesos: %d\ttiempo: %f\n", numranks, tiempo);
+		writeTime(tiempo, n, numranks)
 	}
 
 	MPI_Finalize();
