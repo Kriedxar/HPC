@@ -53,7 +53,7 @@ int main(int argc, char *argv[]){
 	MPI_Barrier(MPI_COMM_WORLD);
 
 	
-	if(rank == y){
+	if(rank == 0){
 		for(int x = 0; x < n/numranks+2; x++){
 			if(x == 0){
 				printf("\nrank: %d - ", rank);
