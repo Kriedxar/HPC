@@ -52,7 +52,7 @@ int main(int argc, char *argv[]){
 	MPI_Scatter(&street1[rank*n/numranks], (n/numranks)+2, MPI_INT, &scatterStreet[0], (n/numranks)+2, MPI_INT, 0, MPI_COMM_WORLD);
 	MPI_Barrier(MPI_COMM_WORLD);
 	
-	if(rank == 2){
+	if(rank == 3){
 		for(int x = 0; x < n/numranks+2; x++){
 			if(x == 0){
 				printf("\nrank: %d - ", rank);
@@ -100,7 +100,7 @@ int main(int argc, char *argv[]){
 		MPI_Barrier(MPI_COMM_WORLD);
 
 		
-		if(rank == 2){
+		if(rank == 3){
 			for(int x = 0; x < n/numranks+2; x++){
 				if(x == 0){
 					printf("\nrank: %d - ", rank);
