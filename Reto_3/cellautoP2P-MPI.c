@@ -81,8 +81,9 @@ int main(int argc, char *argv[]){
 			tag = tag + 1;
 			scatterStreet = gatherStreet;
 		//}
+		MPI_Barrier(MPI_COMM_WORLD);
 	}
-	MPI_Barrier(MPI_COMM_WORLD);
+	
 	for(int p = 0; p < numranks; p++){
 		MPI_Gather(gatherStreet, n/numranks, MPI_INT, &street2[(n/numranks)*p], n/numranks, MPI_INT, 0, MPI_COMM_WORLD);
 		MPI_Barrier(MPI_COMM_WORLD);
