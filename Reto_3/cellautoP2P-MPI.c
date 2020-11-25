@@ -78,6 +78,7 @@ int main(int argc, char *argv[]){
 		if(next == numranks){
 			next = 0;
 		}
+		printf("rank: %d\ttag1: %d\ttag2: %d\n", rank, tag1, tag2);
 		MPI_Send(&gatherStreet[1], 1, MPI_INT, prev, tag1*rank, MPI_COMM_WORLD);
 		MPI_Recv(&gatherStreet[n/numranks+1], 1, MPI_INT, next, tag1*next, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
@@ -87,10 +88,8 @@ int main(int argc, char *argv[]){
 		MPI_Barrier(MPI_COMM_WORLD);
 
 		scatterStreet = gatherStreet;
-		if (rank == 0){
-			tag1 = tag1 + 1;
-			tag2 = tag2 + 1;
-		}
+		tag1 = tag1 + 1;
+		tag2 = tag2 + 1;
 		MPI_Barrier(MPI_COMM_WORLD);
 	}
 	
