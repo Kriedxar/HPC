@@ -73,10 +73,11 @@ int main(int argc, char *argv[]){
 			next = 0;
 		}
 		printf("%d, %d, %d\n", rank, prev, next);
-		MPI_Send(&gatherStreet[1], 1, MPI_INT, prev, tag, MPI_COMM_WORLD);
+		MPI_Send(&gatherStreet[1], 1, MPI_INT, prev, tag+5, MPI_COMM_WORLD);
 		MPI_Send(&gatherStreet[n/numranks], 1, MPI_INT, next, tag, MPI_COMM_WORLD);
+		
 		MPI_Recv(&gatherStreet[0], 1, MPI_INT, prev, tag, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-		MPI_Recv(&gatherStreet[n/numranks+1], 1, MPI_INT, next, tag, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+		MPI_Recv(&gatherStreet[n/numranks+1], 1, MPI_INT, next+5, tag, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 		MPI_Barrier(MPI_COMM_WORLD);
 
 		tag = tag + 1;
