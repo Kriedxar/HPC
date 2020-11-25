@@ -66,8 +66,8 @@ int main(int argc, char *argv[]){
 					}
 				}
 			}
-			int prev = p - 1;
-			int next = p + 1;
+			int prev = rank - 1;
+			int next = rank + 1;
 			if(prev < 0){
 				prev = numranks - 1;
 			}
