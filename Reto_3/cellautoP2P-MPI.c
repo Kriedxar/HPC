@@ -108,10 +108,10 @@ int main(int argc, char *argv[]){
 		for(int i = 0; i < n/numranks+2; i++){
 			scatterStreet[i] = gatherStreet[i];
 		}
-		if(rank == 0){
-			tag1 = tag1 + 1;
-			tag2 = tag2 + 1;
-		}
+		//if(rank == 0){
+		//	tag1 = tag1 + 1;
+		//	tag2 = tag2 + 1;
+		//}
 		MPI_Barrier(MPI_COMM_WORLD);
 	}
 	
