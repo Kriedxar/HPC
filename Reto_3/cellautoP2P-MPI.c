@@ -47,39 +47,41 @@ int main(int argc, char *argv[]){
 	}
 	for(int r = 0; r < t; r++){
 		//for(int p = 0; p < numranks; p++){
-			printf("%d\n", tag);
-			for(int i = 1; i < n/numranks+1; i++){
-				if(scatterStreet[i] == 0){
-					if(scatterStreet[i-1] == 1){
-						gatherStreet[i] = 1;
-					}
-					else{
-						gatherStreet[i] = 0;
-					}
+		for(int i = 1; i < n/numranks+1; i++){
+			if(scatterStreet[i] == 0){
+				if(scatterStreet[i-1] == 1){
+					gatherStreet[i] = 1;
 				}
 				else{
-					if(scatterStreet[i+1] == 0){
-						gatherStreet[i] = 0;
-					}
-					else if(scatterStreet[i+1] == 1){
-						gatherStreet[i] = 1;
-					}
+					gatherStreet[i] = 0;
 				}
 			}
-			int prev = rank - 1;
-			int next = rank + 1;
-			if(prev < 0){
-				prev = numranks - 1;
+			else{
+				if(scatterStreet[i+1] == 0){
+					gatherStreet[i] = 0;
+				}
+				else if(scatterStreet[i+1] == 1){
+					gatherStreet[i] = 1;
+				}
 			}
-			if(next == numranks){
-				next = 0;
-			}
-			MPI_Send(&gatherStreet[1], 1, MPI_INT, prev, tag, MPI_COMM_WORLD);
-			MPI_Send(&gatherStreet[n/numranks], 1, MPI_INT, next, tag, MPI_COMM_WORLD);
-			MPI_Recv(&gatherStreet[0], 1, MPI_INT, prev, tag, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-			MPI_Recv(&gatherStreet[n/numranks+1], 1, MPI_INT, next, tag, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-			tag = tag + 1;
-			scatterStreet = gatherStreet;
+		}
+		for(int i = 1; i < n/numranks+1; i++){
+			printf("%d, %d", rank, gatherStreet[i]);
+		}
+		int prev = rank - 1;
+		int next = rank + 1;
+		if(prev < 0){
+			prev = numranks - 1;
+		}
+		if(next == numranks){
+			next = 0;
+		}
+		MPI_Send(&gatherStreet[1], 1, MPI_INT, prev, tag, MPI_COMM_WORLD);
+		MPI_Send(&gatherStreet[n/numranks], 1, MPI_INT, next, tag, MPI_COMM_WORLD);
+		MPI_Recv(&gatherStreet[0], 1, MPI_INT, prev, tag, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+		MPI_Recv(&gatherStreet[n/numranks+1], 1, MPI_INT, next, tag, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+		tag = tag + 1;
+		scatterStreet = gatherStreet;
 		//}
 		MPI_Barrier(MPI_COMM_WORLD);
 	}
