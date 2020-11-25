@@ -47,7 +47,7 @@ int main(int argc, char *argv[]){
 	}
 	for(int r = 0; r < t; r++){
 		//for(int p = 0; p < numranks; p++){
-			//printf("%d\n", p);
+			printf("%d\n", rank);
 			for(int i = 1; i < n/numranks+1; i++){
 				if(scatterStreet[i] == 0){
 					if(scatterStreet[i-1] == 1){
