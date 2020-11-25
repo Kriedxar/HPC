@@ -34,9 +34,11 @@ int main(int argc, char *argv[]){
 	street1[0] = street1[n];
 	street1[n+1] = street1[1];
 
-	printf("t:\t");
-	for(int i = 1; i < n+1; i++){
-		printf("%d ", street1[i]);
+	if (rank == 0){
+		printf("t:\t");
+		for(int i = 1; i < n+1; i++){
+			printf("%d ", street1[i]);
+		}
 	}
 
 	MPI_Init(&argc, &argv);
