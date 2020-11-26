@@ -25,7 +25,7 @@ echo " ${args[0]} ${args[1]} ${args[2]}"
 
 if [ "${args[0]}" == "$compile" ] &&  [ "${args[1]}" == "$run" ];
 then
-	mpicc cellautoCC-MPI.c -o execP2P
+	mpicc cellautoP2P-MPI.c -o execP2P
 	exec ./execP2P
 	echo "success"
 else
