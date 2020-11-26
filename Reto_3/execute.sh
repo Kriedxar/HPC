@@ -24,11 +24,9 @@ exec(){
 
 if [ "${args[0]}" == "$compile" ] &&  [ "${args[1]}" == "$run" ];
 then
-	echo "#nodes;#cells;iteration;time"
 	mpicc cellautoP2P-MPI.c -o execP2P
 	exec ./execP2P
 	echo "success"
 else
 	echo "revisa los comandos de entrada"
-
 fi
