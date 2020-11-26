@@ -46,7 +46,7 @@ int main(int argc, char *argv[]){
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	MPI_Get_processor_name(hostname, &len);
 
-	
+	/*
 	if(rank==0){
 		printf("\nt:\t");
 		for(int i = 1; i < n+1; i++){
@@ -54,7 +54,7 @@ int main(int argc, char *argv[]){
 		}
 		printf("\n");
 	}
-	
+	*/
 
 	//array for internal processing of each node
 	int *scatterStreet = (int *)malloc((n/numranks+2)*sizeof(double));
@@ -148,13 +148,13 @@ int main(int argc, char *argv[]){
 	//save times into txt file
 	if(rank == 0){
 		writeTime(tiempo, n, numranks, t);
-		
+		/*
 		printf("\nt+1:\t");
 		for(int i = 1; i < n+1; i++){
 			printf("%d ", street2[i]);
 		}
 		printf("\nprocesos: %d\ttiempo: %f\n", numranks, tiempo);
-		
+		*/
 	}
 
 	MPI_Finalize();
