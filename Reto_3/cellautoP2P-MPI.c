@@ -7,6 +7,13 @@
 //mpirun -np 8 -hosts wn1,wn2,wn3,wn4,wn5,wn6,wn7,wn8 ./execP2P 16 1
 //mpirun -np 8 -machinefile mfile ./execP2P 16 1
 
+//write time in txt file
+void writeTime(double tiempo, int tam, int wnodos, int iterations){
+	FILE *f = fopen("timesP2PMPI.txt","a+");
+	fprintf(f,"%i;%i;%i;%.3lf\n", wnodos, tam, iterations, tiempo);
+	fclose(f);
+}
+
 int main(int argc, char *argv[]){
 	int n = atoi(argv[1]);
 	int t = atoi(argv[2]);
@@ -16,25 +23,30 @@ int main(int argc, char *argv[]){
 	int tag2 = 11;
 	char hostname[MPI_MAX_PROCESSOR_NAME];
 
+	//variables for timing
 	double startTime;
 	double endTime;
 	double tiempo;
 
+	//array containing starting street with random vehicle positions
 	int *street1 = (int *)malloc((n+2)*sizeof(double));
 
 	srand(time(NULL));
 
+	//randomly assignation for vehicle positions
 	for(int i = 1; i <= n; i++){
 		street1[i] = rand() % 2;
 	}
 	street1[0] = street1[n];
 	street1[n+1] = street1[1];
 
+	//MPI Initialice
 	MPI_Init(&argc, &argv);
 	MPI_Comm_size(MPI_COMM_WORLD, &numranks);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	MPI_Get_processor_name(hostname, &len);
 
+	/*
 	if(rank==0){
 		printf("\nt:\t");
 		for(int i = 1; i < n+1; i++){
@@ -42,13 +54,18 @@ int main(int argc, char *argv[]){
 		}
 		printf("\n");
 	}
+	*/
 
+	//array for internal processing of each node
 	int *scatterStreet = (int *)malloc((n/numranks+2)*sizeof(double));
 	int *gatherStreet = (int *)malloc((n/numranks+2)*sizeof(double));
+	//array with final results
 	int *street2 = (int *)malloc((n+2)*sizeof(double));
 
+	//initial time
 	startTime = MPI_Wtime();
 
+	//split the array street to each node
 	MPI_Scatter(&street1[rank*n/numranks+1], (n/numranks), MPI_INT, &scatterStreet[1], (n/numranks), MPI_INT, 0, MPI_COMM_WORLD);
 	MPI_Barrier(MPI_COMM_WORLD);
 
@@ -61,6 +78,7 @@ int main(int argc, char *argv[]){
 		next = 0;
 	}
 
+	//initial comunication P2P between nodes to get extra positions 
 	MPI_Send(&scatterStreet[1], 1, MPI_INT, prev, tag1*rank, MPI_COMM_WORLD);
 	MPI_Recv(&scatterStreet[n/numranks+1], 1, MPI_INT, next, tag1*next, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
@@ -69,6 +87,7 @@ int main(int argc, char *argv[]){
 
 	MPI_Barrier(MPI_COMM_WORLD);
 
+	//internal processing of each node
 	for(int r = 0; r < t; r++){
 		for(int i = 1; i < n/numranks+1; i++){
 			if(scatterStreet[i] == 0){
@@ -96,7 +115,7 @@ int main(int argc, char *argv[]){
 		if(next == numranks){
 			next = 0;
 		}
-		//printf("rank: %d\ttag1: %d\ttag1s: %d\ttag1r: %d\ttag2: %d\ttag2s: %d\ttag2r: %d\n", rank, tag1, tag1*rank, tag1*next, tag2, tag2*rank, tag2*prev);
+		//comunication P2P between nodes to get extra positions
 		MPI_Send(&gatherStreet[1], 1, MPI_INT, prev, tag1*rank, MPI_COMM_WORLD);
 		MPI_Recv(&gatherStreet[n/numranks+1], 1, MPI_INT, next, tag1*next, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
@@ -108,30 +127,32 @@ int main(int argc, char *argv[]){
 		for(int i = 0; i < n/numranks+2; i++){
 			scatterStreet[i] = gatherStreet[i];
 		}
-		//if(rank == 0){
-		//	tag1 = tag1 + 1;
-		//	tag2 = tag2 + 1;
-		//}
 		MPI_Barrier(MPI_COMM_WORLD);
 	}
 	
+	//joining the information of each node in the final array
 	MPI_Gather(&gatherStreet[1], n/numranks, MPI_INT, &street2[(n/numranks)*rank+1], n/numranks, MPI_INT, 0, MPI_COMM_WORLD);
 	MPI_Barrier(MPI_COMM_WORLD);
 
 	street2[n+1] = street2[1];
 	street2[0] = street2[n];
 
+	//end time
 	endTime = MPI_Wtime();
 	if(rank == 0){
 		tiempo = endTime - startTime;
 	}
 
+	//save times into txt file
 	if(rank == 0){
+		writeTime(tiempo, n, numranks, t);
+		/*
 		printf("\nt+1:\t");
 		for(int i = 1; i < n+1; i++){
 			printf("%d ", street2[i]);
 		}
 		printf("\nprocesos: %d\ttiempo: %f\n", numranks, tiempo);
+		*/
 	}
 
 	MPI_Finalize();
