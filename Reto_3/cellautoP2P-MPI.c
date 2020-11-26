@@ -10,7 +10,7 @@
 //write time in txt file
 void writeTime(double tiempo, int tam, int wnodos, int iterations){
 	FILE *f = fopen("timesP2PMPI.txt","a+");
-	fprintf(f,"%i;%i;%i;%.4lf\n", wnodos, tam, iterations, tiempo);
+	fprintf(f,"%i;%i;%i;%.6lf\n", wnodos, tam, iterations, tiempo);
 	fclose(f);
 }
 
