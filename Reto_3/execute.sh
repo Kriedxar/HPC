@@ -10,11 +10,12 @@ args=("$@")
 exec(){
 	for i in {1..5}
 	do
-		for j in 10 100 1000 10000 100000
+		for j in 10 100 1000 10000 1000000
 			do
 			for k in 10 100 1000
 				do
-				mpirun -np 1 -hosts wn1 ./"$1" $j $k
+				mpirun -np 1 -machinefile mfile ./"$1" $j $k
+				mpirun -np 4 -machinefile mfile
 				mpirun -np 8 -machinefile mfile ./"$1" $j $k
 				done
 			done
