@@ -22,10 +22,9 @@ exec(){
 	done
 }
 
-echo " ${args[0]} ${args[1]} ${args[2]}"
-
 if [ "${args[0]}" == "$compile" ] &&  [ "${args[1]}" == "$run" ];
 then
+	echo "#nodes;#cells;iteration;time"
 	mpicc cellautoP2P-MPI.c -o execP2P
 	exec ./execP2P
 	echo "success"
