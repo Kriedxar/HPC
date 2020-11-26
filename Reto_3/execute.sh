@@ -15,7 +15,7 @@ exec(){
 			for k in 10 100 1000
 				do
 				mpirun -np 1 -machinefile mfile ./"$1" $j $k
-				mpirun -np 4 -machinefile mfile
+				mpirun -np 4 -machinefile mfile ./"$1" $j $k
 				mpirun -np 8 -machinefile mfile ./"$1" $j $k
 				done
 			done
