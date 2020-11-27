@@ -8,14 +8,14 @@ run='run' # run file
 args=("$@")
 
 exec(){
-	for i in {1..5}
+	for i in {1..2} #trys
 	do
-		for j in 10 100 1000 10000 100000 1000000 10000000
+		for j in 10 100  #tam vector
 			do
-			for k in 10 100 1000 10000
+			for k in 10 100 	#iterations
 				do
 				mpirun -np 1 -machinefile mfile ./"$1" $j $k
-				mpirun -np 4 -machinefile mfile ./"$1" $j $k
+				#mpirun -np 4 -machinefile mfile ./"$1" $j $k
 				mpirun -np 8 -machinefile mfile ./"$1" $j $k
 				done
 			done
